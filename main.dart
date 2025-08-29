@@ -5,23 +5,65 @@ class MyApp extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return MaterialApp(
+      title: 'Responsive UI with MediaQuery',
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(title: const Text("Responsive UI Example")),
-        body: LayoutBuilder(
-          builder: (context, constraints){
-            if(constraints.maxWidth < 600){
-              return const Center(
-                child: Text("Mobile Layout",style: TextStyle(fontSize: 24)),
-              );
-            } else{
-              return const Center(
-              child: Text("Desktop Layout",style: TextStyle(fontSize: 32)),
-              );
-        
-
-            }
-          },        ),
+        body: const ResponsiveLayout(),
       ),
     );
   }
+}
+class ResponsiveLayout extends StatelessWidget{
+  const ResponsiveLayout({super.key});
+  @override
+  Widget build(BuildContext context){
+    double screenWidth = MediaQuery.of(context).size.width;
+    if(screenWidth < 600){
+      return _buildMobileLayout();
+    }
+    else if(screenWidth < 1200){
+      return _buildTabletLayout();
+    }
+    else{
+      return _buildDesktopLayout();
+    }
+      }
+      Widget _buildMobileLayout(){
+        return Container(
+          color: Colors.blue.shade50,
+          child: const Center(
+            child: Text(
+              "Mobile Layout",
+              style: TextStyle(fontSize: 24,color: Colors.blue),
+            ),
+          ),
+        );
+      }
+      Widget _buildTabletLayout(){
+        return Container(
+          color: Colors.green.shade50,
+          child: const Center(
+            child: Text(
+              " Tablet Layout",
+              style: TextStyle(fontSize: 28, color:Colors.green),
+
+            ),
+          ),
+
+        );
+      }
+      Widget _buildDesktopLayout(){
+        return Container(
+          color: Colors.red.shade50,
+          child: const Center(
+            child: Text(
+              "DeskTop LayOut",
+              style: TextStyle(fontSize: 32,color: Colors.red),
+            ),
+            ),
+
+        );
+      }
+
 }
